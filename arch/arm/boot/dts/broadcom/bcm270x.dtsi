@@ -180,7 +180,7 @@
 		regulator-name = "cam1-reg";
 		enable-active-high;
 		/* Needs to be enabled, as removing a regulator is very unsafe */
-		status = "okay";
+		status = "disabled";
 	};
 
 	cam1_clk: cam1_clk {
