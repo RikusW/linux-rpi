@@ -146,37 +146,17 @@
 		};
 	};
 
-	mcp251xfd_frag0: fragment@15 {
-		target = <&spi0>;
-		__overlay__ {
-			status = "okay";
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			mcp251xfd0: mcp251xfd@0 {
-				compatible = "microchip,mcp251xfd";
-				reg = <0>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&mcp251xfd_pins>;
-				spi-max-frequency = <20000000>;
-				interrupt-parent = <&gpio>;
-				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
-				clocks = <&clk_mcp251xfd_osc>;
-				bc-sync-gpios=<&expgpio 5 GPIO_ACTIVE_LOW>;
-			};
-		};
-	};
-
-
 	__overrides__ {
 		spi0-0 = <0>, "+0",
-			<&mcp251xfd_frag0>, "target:0=", <&spi0>,
-			<&mcp251xfd0>, "reg:0=0",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=0",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_0_pins",
 			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-0-osc",
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_0_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-0-xceiver",
-			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-0-xceiver";
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-0-xceiver",
+			<&mcp251xfd>, "microchip,bc-sync-gpios=<&expgpio 5 GPIO_ACTIVE_LOW>";
+//			<&mcp251xfd_bc_sync_gpios>;
 		spi0-1 = <0>, "+1",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=1",
