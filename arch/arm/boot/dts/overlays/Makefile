@@ -265,6 +265,8 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	spi0-1cs.dtbo \
 	spi0-1cs-inverted.dtbo \
 	spi0-2cs.dtbo \
+	spi0-3cs.dtbo \
+	spi0-4cs.dtbo \
 	spi1-1cs.dtbo \
 	spi1-2cs.dtbo \
 	spi1-3cs.dtbo \
@@ -276,6 +278,7 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	spi3-1cs.dtbo \
 	spi3-1cs-pi5.dtbo \
 	spi3-2cs.dtbo \
+	spi3-4cs.dtbo \
 	spi3-2cs-pi5.dtbo \
 	spi4-1cs.dtbo \
 	spi4-2cs.dtbo \
