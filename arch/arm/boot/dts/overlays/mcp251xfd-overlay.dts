@@ -149,23 +149,19 @@
 	fragment@15 {
 		target = <&mcp251xfd>;
 		mcp251xfd_bc_sync_gpios: __dormant__ {
-			microchip,bc-sync-gpios = <&gpio 44 GPIO_ACTIVE_LOW>;
+			microchip,bc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_LOW>;
 		};
 	};
 
 	__overrides__ {
-		spi0-0 = <0>, "+0",
-			<0>, "+15", 
+		spi0-0 = <0>, "+0", <0>, "+15", 
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=0",
-//			<&mcp251xfd_bc_sync_gpios>,//"microchip,bc-sync-gpios=", 45,
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_0_pins",
 			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-0-osc",
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_0_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-0-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-0-xceiver";
-//			<&mcp251xfd>, microchip,bc-sync-gpios = <&gpio 45 GPIO_ACTIVE_LOW>";
-//			<&mcp251xfd>, "microchip,bc-sync-gpios=", <&gpio 45 GPIO_ACTIVE_LOW>;
 		spi0-1 = <0>, "+1",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=1",
