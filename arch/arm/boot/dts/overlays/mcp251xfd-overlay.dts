@@ -149,7 +149,8 @@
 	fragment@15 {
 		target = <&mcp251xfd>;
 		mcp251xfd_bc_sync_gpios: __dormant__ {
-			microchip,bc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_LOW>;
+			microchip,bc-sync-gpios = <&gpio 12 GPIO_ACTIVE_HIGH>;
+//			microchip,bc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
 		};
 	};
 
