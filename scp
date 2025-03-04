@@ -1,0 +1,1 @@
+scp arch/arm64/boot/dts/overlays/mcp251xfd.dtbo pi@192.168.41.250:
