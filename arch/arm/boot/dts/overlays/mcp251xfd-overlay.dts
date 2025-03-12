@@ -110,6 +110,7 @@
 				interrupt-parent = <&gpio>;
 				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
 				clocks = <&clk_mcp251xfd_osc>;
+				tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
 			};
 		};
 	};
@@ -155,14 +156,33 @@
 
 	fragment@15 {
 		target = <&mcp251xfd>;
-		mcp251xfd_bc_sync_gpios: __dormant__ {
-			microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
-//			microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+		__dormant__ {
+//			microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+			microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	fragment@17 {
+		target = <&cam1_reg>;
+		__dormant__ {
+			status = "disabled"; //turn of cam1_reg so that expgpio 5 can be reused above
+		};
+	};
+
+	fragment@18 {
+		target = <&expgpio>;
+		__dormant__ {
+			tbc-sync {
+				gpio-hog; //CANNOT open in userspace or driver.... TODO chang hog code to add driver access property...
+				output-high;
+				gpios = <5 0>;
+				line-name = "tbc-sync";
+			};
 		};
 	};
 
 	__overrides__ {
-		spi0-0 = <0>, "+0", <0>, "+15", 
+		spi0-0 = <0>, "+0", <0>, "+17", <0>, "+18",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=0",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_0_pins",
