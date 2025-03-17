@@ -110,8 +110,8 @@
 				interrupt-parent = <&gpio>;
 				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
 				clocks = <&clk_mcp251xfd_osc>;
-				tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
-			//	tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+				microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+			//	microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 			};
 		};
 	};
