@@ -111,6 +111,7 @@
 				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
 				clocks = <&clk_mcp251xfd_osc>;
 				tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+			//	tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 			};
 		};
 	};
@@ -154,13 +155,13 @@
 		};
 	};
 
-	fragment@15 {
+/*	fragment@15 {
 		target = <&mcp251xfd>;
 		__dormant__ {
 //			microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 			microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
 		};
-	};
+	};*/
 
 	fragment@17 {
 		target = <&cam1_reg>;
@@ -169,7 +170,7 @@
 		};
 	};
 
-	fragment@18 {
+/*	fragment@18 {
 		target = <&expgpio>;
 		__dormant__ {
 			tbc-sync {
@@ -179,7 +180,7 @@
 				line-name = "tbc-sync"; // <0>, "+18",
 			};
 		};
-	};
+	};*/
 
 	__overrides__ {
 		spi0-0 = <0>, "+0", <0>, "+17",
