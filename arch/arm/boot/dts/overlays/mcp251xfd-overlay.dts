@@ -182,8 +182,15 @@
 		};
 	};*/
 
+	fragment@19 {
+		target = <&mcp251xfd>;
+		__dormant__ {
+			spi-controllers = <&spi3 &spi4 &spi5>;
+		};
+	};
+
 	__overrides__ {
-		spi0-0 = <0>, "+0", <0>, "+17",
+		spi0-0 = <0>, "+0", <0>, "+17", <0>, "+19",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=0",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_0_pins",
