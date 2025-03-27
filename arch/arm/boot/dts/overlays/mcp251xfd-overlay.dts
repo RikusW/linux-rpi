@@ -186,7 +186,7 @@
 		target = <&mcp251xfd>;
 		__dormant__ {
 			spi-controllers = <&spi3>;// &spi4 &spi5>;
-			microchip,tbc-sync-spi = <&spidev_tbc>;
+		//	microchip,tbc-sync-spi = <&spidev_tbc>;
 		};
 	};
 
