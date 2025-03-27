@@ -60,7 +60,7 @@
 	};
 
 	fragment@7 {
-		target-path = "spi5/spidev@0";
+		target-path = "spi0/spidev@4";
 		__dormant__ {
 			status = "disabled";
 		};
@@ -186,7 +186,8 @@
 		target = <&mcp251xfd>;
 		__dormant__ {
 			spi-controllers = <&spi3>;// &spi4 &spi5>;
-		//	microchip,tbc-sync-spi = <&spidev_tbc>;
+		//	microchip,tbc-sync-spi = <&spi0>;
+			microchip,tbc-sync-cs  = <4>;
 		};
 	};
 
@@ -250,14 +251,14 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-3-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-3-xceiver";
 
-		spi5-0 = <0>, "+7",
-			<&mcp251xfd_frag>, "target:0=", <&spi5>,
-			<&mcp251xfd>, "reg:0=0",
-			<&mcp251xfd_pins>, "name=mcp251xfd_spi5_0_pins",
-			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi5-0-osc",
-			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi5_0_xceiver_pins",
-			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi5-0-xceiver",
-			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi5-0-xceiver";
+		spi0-4 = <0>, "+7",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=4",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_4_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-4-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_4_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-4-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-4-xceiver";
 		spi0-3 = <0>, "+16",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=3",
