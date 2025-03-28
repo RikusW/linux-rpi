@@ -31,6 +31,13 @@
 		};
 	};
 
+	fragment@15 {
+		target-path = "spi0/spidev@3";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
 	fragment@3 {
 		target-path = "spi3/spidev@0";
 		__dormant__ {
@@ -110,7 +117,7 @@
 				interrupt-parent = <&gpio>;
 				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
 				clocks = <&clk_mcp251xfd_osc>;
-				microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+			//	microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
 			//	microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 			};
 		};
@@ -214,6 +221,14 @@
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_2_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-2-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-2-xceiver";
+		spi0-3 = <0>, "+15",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=3",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_3_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-3-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_3_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-3-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-3-xceiver";
 
 		spi3-0 = <0>, "+3",
 			<&mcp251xfd_frag>, "target:0=", <&spi3>,
