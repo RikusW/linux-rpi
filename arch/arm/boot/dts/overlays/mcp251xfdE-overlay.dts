@@ -1,0 +1,296 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/pinctrl/bcm2835.h>
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target-path = "spi0/spidev@0";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@1 {
+		target-path = "spi0/spidev@1";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@2 {
+		target-path = "spi0/spidev@2";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@15 {
+		target-path = "spi0/spidev@3";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@3 {
+		target-path = "spi3/spidev@0";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@4 {
+		target-path = "spi3/spidev@1";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@5 {
+		target-path = "spi4/spidev@0";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@6 {
+		target-path = "spi4/spidev@1";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@7 {
+		target-path = "spi5/spidev@0";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@16 {
+		target-path = "spi5/spidev@1";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@8 {
+		target = <&gpio>;
+		__overlay__ {
+			mcp251xfd_pins: mcp251xfd_pins {
+				brcm,pins = <25>;
+				brcm,function = <BCM2835_FSEL_GPIO_IN>;
+			};
+		};
+	};
+
+	fragment@9 {
+		target-path = "/clocks";
+		__overlay__ {
+			clk_mcp251xfd_osc: mcp251xfd-osc {
+				#clock-cells = <0>;
+				compatible = "fixed-clock";
+				clock-frequency = <40000000>;
+			};
+		};
+	};
+
+	mcp251xfd_frag: fragment@10 {
+		target = <&spi0>;
+		__overlay__ {
+			status = "okay";
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			mcp251xfd: mcp251xfd@0 {
+				compatible = "microchip,mcp251xfd";
+				reg = <0>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&mcp251xfd_pins>;
+				spi-max-frequency = <20000000>;
+				interrupt-parent = <&gpio>;
+				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
+				clocks = <&clk_mcp251xfd_osc>;
+			//	microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+			//	microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+			};
+		};
+	};
+
+	fragment@11 {
+		target = <&mcp251xfd>;
+		mcp251xfd_rx_int_gpios: __dormant__ {
+			microchip,rx-int-gpios = <&gpio 255 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	fragment@12 {
+		target = <&gpio>;
+		__dormant__ {
+			mcp251xfd_xceiver_pins: mcp251xfd_xceiver_pins {
+				brcm,pins = <255>;
+				brcm,function = <BCM2835_FSEL_GPIO_OUT>;
+			};
+		};
+	};
+
+	fragment@13 {
+		target-path = "/";
+		__dormant__ {
+			reg_mcp251xfd_xceiver: reg_mcp251xfd_xceiver {
+				compatible = "regulator-fixed";
+				regulator-name = "mcp251xfd_xceiver";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				gpio = <&gpio 4 GPIO_ACTIVE_HIGH>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&mcp251xfd_xceiver_pins>;
+			};
+		};
+	};
+
+	fragment@14 {
+		target = <&mcp251xfd>;
+		__dormant__ {
+			xceiver-supply = <&reg_mcp251xfd_xceiver>;
+		};
+	};
+
+/*	fragment@15 {
+		target = <&mcp251xfd>;
+		__dormant__ {
+//			microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+			microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
+		};
+	};*/
+
+	fragment@17 {
+		target = <&cam1_reg>;
+		__dormant__ {
+			status = "disabled"; //turn of cam1_reg so that expgpio 5 can be reused above
+		};
+	};
+
+/*	fragment@18 {
+		target = <&expgpio>;
+		__dormant__ {
+			tbc-sync {
+				gpio-hog; //CANNOT open in userspace or driver.... TODO chang hog code to add driver access property...
+				output-high;
+				gpios = <5 0>;
+				line-name = "tbc-sync"; // <0>, "+18",
+			};
+		};
+	};*/
+
+	fragment@19 {
+		target = <&mcp251xfd>;
+		__dormant__ {
+			spi-controllers = <&spi3 &spi4 &spi5>;
+		};
+	};
+
+	__overrides__ {
+		spi0-0 = <0>, "+0", <0>, "+17", <0>, "+19",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=0",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_0_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-0-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_0_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-0-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-0-xceiver";
+		spi0-1 = <0>, "+1",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=1",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_1_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-1-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_1_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-1-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-1-xceiver";
+		spi0-2 = <0>, "+2",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=2",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_2_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-2-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_2_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-2-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-2-xceiver";
+		spi0-3 = <0>, "+15",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=3",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_3_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-3-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_3_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-3-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-3-xceiver";
+
+		spi3-0 = <0>, "+3",
+			<&mcp251xfd_frag>, "target:0=", <&spi3>,
+			<&mcp251xfd>, "reg:0=0",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_0_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi3-0-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi3_0_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-0-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-0-xceiver";
+		spi3-1 = <0>, "+4",
+			<&mcp251xfd_frag>, "target:0=", <&spi3>,
+			<&mcp251xfd>, "reg:0=1",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_1_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi3-1-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi3_1_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-1-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-1-xceiver";
+
+		spi4-0 = <0>, "+5",
+			<&mcp251xfd_frag>, "target:0=", <&spi4>,
+			<&mcp251xfd>, "reg:0=0",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi4_0_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi4-0-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi4_0_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi4-0-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi4-0-xceiver";
+		spi4-1 = <0>, "+6",
+			<&mcp251xfd_frag>, "target:0=", <&spi4>,
+			<&mcp251xfd>, "reg:0=1",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi4_1_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi4-1-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi4_1_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi4-1-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi4-1-xceiver";
+
+		spi5-0 = <0>, "+7",
+			<&mcp251xfd_frag>, "target:0=", <&spi5>,
+			<&mcp251xfd>, "reg:0=0",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi5_0_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi5-0-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi5_0_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi5-0-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi5-0-xceiver";
+		spi5-1 = <0>, "+16",
+			<&mcp251xfd_frag>, "target:0=", <&spi5>,
+			<&mcp251xfd>, "reg:0=1",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi5_1_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi5-1-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi5_1_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi5-1-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi5-1-xceiver";
+
+
+		speed = <&mcp251xfd>, "spi-max-frequency:0";
+		interrupt = <&mcp251xfd_pins>, "brcm,pins:0",
+			<&mcp251xfd>, "interrupts:0";
+		rx_interrupt = <0>, "+11",
+			<&mcp251xfd_pins>, "brcm,pins:4",
+			<&mcp251xfd_rx_int_gpios>, "microchip,rx-int-gpios:4";
+		xceiver_enable = <0>, "+12+13+14",
+			<&mcp251xfd_xceiver_pins>, "brcm,pins:0",
+			<&reg_mcp251xfd_xceiver>, "gpio:4";
+		xceiver_active_high = <&reg_mcp251xfd_xceiver>, "enable-active-high?";
+	};
+};
