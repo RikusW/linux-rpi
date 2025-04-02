@@ -258,7 +258,7 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-3-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-3-xceiver";
 
-		spi0-4 = <0>, "+7+20",
+		spi0-4 = <0>, "+7",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=4",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_4_pins",
@@ -275,7 +275,7 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-3-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-3-xceiver";
 
-
+		tbc-sync-cs = <0>, "+20";
 		speed = <&mcp251xfd>, "spi-max-frequency:0";
 		interrupt = <&mcp251xfd_pins>, "brcm,pins:0",
 			<&mcp251xfd>, "interrupts:0";
