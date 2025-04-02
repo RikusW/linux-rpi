@@ -16,63 +16,56 @@
 			status = "disabled";
 		};
 	};
-
 	fragment@1 {
 		target-path = "spi0/spidev@1";
 		__dormant__ {
 			status = "disabled";
 		};
 	};
-
 	fragment@2 {
 		target-path = "spi0/spidev@2";
 		__dormant__ {
 			status = "disabled";
 		};
 	};
-
 	fragment@3 {
-		target-path = "spi3/spidev@0";
+		target-path = "spi0/spidev@3";
 		__dormant__ {
 			status = "disabled";
 		};
 	};
-
 	fragment@4 {
-		target-path = "spi3/spidev@1";
-		__dormant__ {
-			status = "disabled";
-		};
-	};
-
-	fragment@5 {
-		target-path = "spi3/spidev@2";
-		__dormant__ {
-			status = "disabled";
-		};
-	};
-
-	fragment@6 {
-		target-path = "spi3/spidev@3";
-		__dormant__ {
-			status = "disabled";
-		};
-	};
-
-	fragment@7 {
 		target-path = "spi0/spidev@4";
 		__dormant__ {
 			status = "disabled";
 		};
 	};
 
-	fragment@16 {
-		target-path = "spi0/spidev@3";
+
+	fragment@30 {
+		target-path = "spi3/spidev@0";
 		__dormant__ {
 			status = "disabled";
 		};
 	};
-
+	fragment@31 {
+		target-path = "spi3/spidev@1";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+	fragment@32 {
+		target-path = "spi3/spidev@2";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
+	fragment@33 {
+		target-path = "spi3/spidev@3";
+		__dormant__ {
+			status = "disabled";
+		};
+	};
 
 
 	fragment@40 {
@@ -87,6 +80,7 @@
 			status = "disabled";
 		};
 	};
+
 
 	fragment@50 {
 		target-path = "spi5/spidev@0";
@@ -235,8 +229,25 @@
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_2_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-2-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-2-xceiver";
+		spi0-3 = <0>, "+3+18",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=3",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_3_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-3-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_3_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-3-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-3-xceiver";
+		spi0-4 = <0>, "+4+19",
+			<&mcp251xfd_frag>, "target:0=", <&spi0>,
+			<&mcp251xfd>, "reg:0=4",
+			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_4_pins",
+			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-4-osc",
+			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_4_xceiver_pins",
+			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-4-xceiver",
+			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-4-xceiver";
 
-		spi3-0 = <0>, "+3",
+
+		spi3-0 = <0>, "+30",
 			<&mcp251xfd_frag>, "target:0=", <&spi3>,
 			<&mcp251xfd>, "reg:0=0",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_0_pins",
@@ -244,7 +255,7 @@
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi3_0_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-0-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-0-xceiver";
-		spi3-1 = <0>, "+4",
+		spi3-1 = <0>, "+31",
 			<&mcp251xfd_frag>, "target:0=", <&spi3>,
 			<&mcp251xfd>, "reg:0=1",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_1_pins",
@@ -253,7 +264,8 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-1-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-1-xceiver";
 
-		spi3-2 = <0>, "+5",
+
+		spi3-2 = <0>, "+32",
 			<&mcp251xfd_frag>, "target:0=", <&spi3>,
 			<&mcp251xfd>, "reg:0=2",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_2_pins",
@@ -261,7 +273,7 @@
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi3_2_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-2-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-2-xceiver";
-		spi3-3 = <0>, "+6",
+		spi3-3 = <0>, "+33",
 			<&mcp251xfd_frag>, "target:0=", <&spi3>,
 			<&mcp251xfd>, "reg:0=3",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi3_3_pins",
@@ -270,22 +282,6 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-3-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-3-xceiver";
 
-		spi0-4 = <0>, "+7+19",
-			<&mcp251xfd_frag>, "target:0=", <&spi0>,
-			<&mcp251xfd>, "reg:0=4",
-			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_4_pins",
-			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-4-osc",
-			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_4_xceiver_pins",
-			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-4-xceiver",
-			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-4-xceiver";
-		spi0-3 = <0>, "+16+18",
-			<&mcp251xfd_frag>, "target:0=", <&spi0>,
-			<&mcp251xfd>, "reg:0=3",
-			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_3_pins",
-			<&clk_mcp251xfd_osc>, "name=mcp251xfd-spi0-3-osc",
-			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi0_3_xceiver_pins",
-			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi0-3-xceiver",
-			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi0-3-xceiver";
 
 		spi4-0 = <0>, "+40",
 			<&mcp251xfd_frag>, "target:0=", <&spi4>,
@@ -304,6 +300,7 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi4-1-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi4-1-xceiver";
 
+
 		spi5-0 = <0>, "+50",
 			<&mcp251xfd_frag>, "target:0=", <&spi5>,
 			<&mcp251xfd>, "reg:0=0",
@@ -320,6 +317,7 @@
 			<&mcp251xfd_xceiver_pins>, "name=mcp251xfd_spi5_1_xceiver_pins",
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi5-1-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi5-1-xceiver";
+
 
 		tbc-sync-cs = <0>, "+20";
 		speed = <&mcp251xfd>, "spi-max-frequency:0";
