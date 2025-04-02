@@ -191,6 +191,13 @@
 		};
 	};
 
+	fragment@20 {
+		target = <&mcp251xfd>;
+		__dormant__ {
+			tbc-sync-cs;
+		};
+	};
+
 	__overrides__ {
 		spi0-0 = <0>, "+0", <0>, "+17", <0>, "+19",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
@@ -251,7 +258,7 @@
 			<&reg_mcp251xfd_xceiver>, "name=reg-mcp251xfd-spi3-3-xceiver",
 			<&reg_mcp251xfd_xceiver>, "regulator-name=mcp251xfd-spi3-3-xceiver";
 
-		spi0-4 = <0>, "+7",
+		spi0-4 = <0>, "+7+20",
 			<&mcp251xfd_frag>, "target:0=", <&spi0>,
 			<&mcp251xfd>, "reg:0=4",
 			<&mcp251xfd_pins>, "name=mcp251xfd_spi0_4_pins",
