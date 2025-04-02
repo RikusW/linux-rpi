@@ -110,8 +110,6 @@
 				interrupt-parent = <&gpio>;
 				interrupts = <25 IRQ_TYPE_LEVEL_LOW>;
 				clocks = <&clk_mcp251xfd_osc>;
-			//	microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
-			//	microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 			};
 		};
 	};
@@ -155,14 +153,6 @@
 		};
 	};
 
-/*	fragment@15 {
-		target = <&mcp251xfd>;
-		__dormant__ {
-//			microchip,tbc-sync-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
-			microchip,tbc-sync-gpios = <&expgpio 5 GPIO_ACTIVE_HIGH>;
-		};
-	};*/
-
 	fragment@17 {
 		target = <&cam1_reg>;
 		__dormant__ {
@@ -170,24 +160,10 @@
 		};
 	};
 
-/*	fragment@18 {
-		target = <&expgpio>;
-		__dormant__ {
-			tbc-sync {
-				gpio-hog; //CANNOT open in userspace or driver.... TODO chang hog code to add driver access property...
-				output-high;
-				gpios = <5 0>;
-				line-name = "tbc-sync"; // <0>, "+18",
-			};
-		};
-	};*/
-
 	fragment@19 {
 		target = <&mcp251xfd>;
 		__dormant__ {
 			spi-controllers = <&spi3>;// &spi4 &spi5>;
-		//	microchip,tbc-sync-spi = <&spi0>;
-			microchip,tbc-sync-cs  = <4>;
 		};
 	};
 
